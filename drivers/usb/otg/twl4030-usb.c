@@ -516,7 +516,8 @@ static irqreturn_t twl4030_usb_irq(int irq, void *_twl)
 		 * USB_LINK_VBUS state.  musb_hdrc won't care until it
 		 * starts to handle softconnect right.
 		 */
-		if (status == USB_EVENT_NONE)
+		/* do not suspend if we have vbus */
+		if (status == USB_EVENT_NONE && !twl->vbus_supplied)
 			twl4030_phy_suspend(twl, 0);
 		else
 			twl4030_phy_resume(twl);
